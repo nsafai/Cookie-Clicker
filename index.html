@@ -9,9 +9,71 @@
 <body>
     <h1 id="cookie-counter">0</h1>
     <button id="cookie-clicker">Make Cookies</button>
+
+    <hr>
+
+    <h2>Shop</h2>
+
+    <hr>
+
+    <p>Click Power</p>
+    <p>Produces <span id="click-power-multiple">1</span> cookie(s) per click</p>
+    <button id="buy-click-power">Buy for <span id="click-power-price">5</span></button>
+    <p>level: <span id="click-power-level">1</span></p>
+
     <script type="text/javascript">
         //declare default variables
         let cookieCount = 0;
+        let clickPower = 1;
+        let clickPowerPriceAmount = 5;
+        let levelNumber = 1;
+
+        // declare DOM variables
+        let cookieCounter = document.getElementById('cookie-counter')
+        let cookieClicker = document.getElementById('cookie-clicker');
+        let buyClickPower = document.getElementById('buy-click-power');
+        let clickPowerPrice = document.getElementById('click-power-price');
+        let level = document.getElementById('click-power-level');
+        let clickPowerMultiple = document.getElementById('click-power-multiple');
+
+
+        // Now we can add an event listener that executes some code every time a user clicks on the button.
+        //everytime a user clicks the button, their cookies are increased by the value of their clickPower.
+        cookieClicker.addEventListener("click", function() {
+            cookieCount = cookieCount + clickPower;
+            // The innerHTML property sets or returns the HTML content (inner HTML) of an element.
+            // cookieCounter.innerHTML = cookieCount;
+            refreshCookieCount()
+        })
+
+        //Buy click power
+        buyClickPower.addEventListener("click", function() {
+            if (cookieCount >= clickPowerPriceAmount) {
+                //subtract cookies from the price of the item
+                cookieCount -= clickPowerPriceAmount;
+                // update cookiecount
+                refreshCookieCount()
+                //Upgrade power level
+                levelNumber += 1;
+                //Update click price
+                clickPowerPriceAmount = Math.floor(clickPowerPriceAmount * 1.33);
+                //update Click Power
+                clickPower += 1;
+                //refresh shop item
+                refreshPowerClick();
+            } else {
+                console.log("You don't have enough cookies!");
+            }
+        })
+
+        let refreshCookieCount = function() {
+            cookieCounter.innerHTML = cookieCount;
+        }
+        let refreshPowerClick = function() {
+            level.innerHTML = levelNumber;
+            clickPowerPrice.innerHTML = clickPowerPriceAmount;
+            clickPowerMultiple.innerHTML = clickPower;
+        }
     </script>
 </body>
 
